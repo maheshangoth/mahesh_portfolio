@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Picker Tambola</title>
+<style>
+    body {
+
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        margin: 500px;
+        height: 300px;
+        width: 500px;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .coin {
+        width: 50px;
+        height: 50px;
+        background-color: silver;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .picked {
+        background-color: green;
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Coin Picker Tambola</h1>
+    <p>Click on a coin to pick it:</p>
+    <div id="coinContainer">
+        <!-- Coins will be dynamically added here -->
+    </div>
+    <button onclick="pickCoin()">Pick Coin</button>
+</div>
+
+<script>
+    // Array to hold the coins
+    var coins = [];
+
+    // Function to generate coins
+    function generateCoins() {
+        var coinContainer = document.getElementById('coinContainer');
+        for (var i = 1; i <= 60; i++) {
+            var coin = document.createElement('div');
+            coin.className = 'coin';
+            coin.innerText = i;
+            coin.setAttribute('data-value', i);
+            coin.onclick = function() {
+                this.classList.toggle('picked');
+            };
+            coins.push(coin);
+            coinContainer.appendChild(coin);
+        }
+    }
+
+    // Function to pick a random coin
+    function pickCoin() {
+        var unpickedCoins = coins.filter(function(coin) {
+            return !coin.classList.contains('picked');
+        });
+        if (unpickedCoins.length === 0) {
+            alert('All coins are picked!');
+            return;
+        }
+        var randomIndex = Math.floor(Math.random() * unpickedCoins.length);
+        var pickedCoin = unpickedCoins[randomIndex];
+        pickedCoin.classList.add('picked');
+    }
+
+    // Call the function to generate coins when the page loads
+    window.onload = function() {
+        generateCoins();
+    };
+</script>
+</body>
+</html>
+
